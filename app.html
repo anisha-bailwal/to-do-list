@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <style>
+    /* ====== Global Styles ====== */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+      color: #eaeaea;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 400px;
+      background: #ffffff10;
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #f5f5f5;
+      letter-spacing: 1px;
+    }
+
+    .input-group {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px 0 0 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-group button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      background: #4a90e2;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .input-group button:hover {
+      background: #357ab8;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background: #2f2f2f;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s ease;
+    }
+
+    li:hover {
+      transform: scale(1.02);
+    }
+
+    .task-text {
+      flex: 1;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions button {
+      border: none;
+      background: none;
+      color: #bbb;
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    .actions button:hover {
+      color: #fff;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Task Manager</h1>
+    <div class="input-group">
+      <input id="taskInput" type="text" placeholder="Enter a new task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    // ====== Add Task ======
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const task = input.value.trim();
+      if (task === "") return;
+
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.className = "task-text";
+      span.textContent = task;
+
+      const actions = document.createElement('div');
+      actions.className = "actions";
+
+      const completeBtn = document.createElement('button');
+      completeBtn.innerHTML = "✔";
+      completeBtn.title = "Mark as complete";
+      completeBtn.onclick = () => {
+        span.classList.toggle('completed');
+      };
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.innerHTML = "✖";
+      deleteBtn.title = "Delete task";
+      deleteBtn.onclick = () => {
+        li.remove();
+      };
+
+      actions.appendChild(completeBtn);
+      actions.appendChild(deleteBtn);
+
+      li.appendChild(span);
+      li.appendChild(actions);
+
+      document.getElementById('taskList').appendChild(li);
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
